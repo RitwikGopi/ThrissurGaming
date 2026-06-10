@@ -7,6 +7,34 @@
   <meta name="description" content="Home PS5 console rentals delivered to your door in Thrissur, Kerala. Rent a PlayStation 5 with controllers and games by the hour, day, or weekend." />
   <meta name="theme-color" content="#0a0a0f" />
 
+  <!-- =========================================================
+       GOOGLE ANALYTICS 4 (GA4)
+       -----------------------------------------------------------
+       EDIT: paste your Measurement ID (looks like G-XXXXXXXXXX)
+       between the quotes below. Until you do, analytics stays
+       completely OFF — no third-party requests, no cookies,
+       no impact on your PageSpeed scores.
+       Find your ID in GA: Admin → Data Streams → your web stream.
+       Note: GA4 sets cookies. India's DPDP Act may make a small
+       cookie/consent notice advisable — ask me to add one if you want.
+       ========================================================= -->
+  <script>
+    var GA_MEASUREMENT_ID = "REPLACE_ME_GA_ID";
+
+    if (GA_MEASUREMENT_ID && GA_MEASUREMENT_ID.indexOf("REPLACE_ME") === -1) {
+      var gaScript = document.createElement("script");
+      gaScript.async = true;
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_MEASUREMENT_ID);
+    }
+  </script>
+
   <!-- Favicon (inline SVG gamepad — no extra request, clears favicon 404) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0f'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E" />
 
@@ -577,6 +605,21 @@
           certificate is issued (can take a few minutes to an hour).
        Docs: https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site
        ========================================================= -->
+
+  <!-- Track taps on any WhatsApp link as a GA4 conversion event.
+       Does nothing until your GA4 Measurement ID is set above. -->
+  <script>
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "whatsapp_click", {
+            event_category: "engagement",
+            event_label: link.closest("footer") ? "footer" : "hero"
+          });
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

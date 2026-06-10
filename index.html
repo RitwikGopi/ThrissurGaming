@@ -5,16 +5,373 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PS5 Rentals — Coming Soon to Thrissur</title>
   <meta name="description" content="Home PS5 console rentals delivered to your door in Thrissur, Kerala. Rent a PlayStation 5 with controllers and games by the hour, day, or weekend." />
+  <meta name="theme-color" content="#0a0a0f" />
+
+  <!-- Favicon (inline SVG gamepad — no extra request, clears favicon 404) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0f'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle'%3E%F0%9F%8E%AE%3C/text%3E%3C/svg%3E" />
 
   <!-- Open Graph / social preview (edit URL once your domain is live) -->
   <meta property="og:title" content="PS5 Rentals — Coming Soon to Thrissur" />
   <meta property="og:description" content="Rent a PS5 + controllers + games, delivered to your home in Thrissur, Kerala." />
   <meta property="og:type" content="website" />
 
+  <!-- Fonts loaded asynchronously so they don't block first paint.
+       The system font stack shows instantly, then Orbitron/Inter swap in. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+
+  <!-- =========================================================
+       STYLES (inlined so they don't block first paint and aren't
+       a separate cached request). To recolour the whole site,
+       edit the CSS variables in :root below.
+       ========================================================= -->
+  <style>
+  :root {
+    --bg:        #0a0a0f;   /* deep black background      */
+    --bg-alt:    #11111a;   /* alternate section bg       */
+    --surface:   #16161f;   /* cards                      */
+    --surface-2: #1d1d2b;   /* card hover / featured      */
+    --text:      #f2f2f7;   /* primary text               */
+    --muted:     #b3b3cc;   /* secondary text (contrast-safe) */
+    --accent:    #00e5ff;   /* electric blue (primary)    */
+    --accent-2:  #b14bff;   /* purple (secondary)         */
+    --accent-3:  #00ff95;   /* neon green (whatsapp)       */
+    --tag-text:  #d6abff;   /* lightened purple for tags (contrast-safe) */
+    --border:    rgba(255, 255, 255, 0.08);
+    --radius:    16px;
+    --maxw:      1100px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .accent {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 90px 0 80px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(177, 75, 255, 0.18), transparent 55%),
+      radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 50%),
+      var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Animated pulsing glow behind the banner */
+  .hero__glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    max-width: 120vw;
+    background: radial-gradient(circle, rgba(0, 229, 255, 0.25), transparent 60%);
+    filter: blur(40px);
+    animation: glowPulse 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.45; transform: translateX(-50%) scale(1); }
+    50%      { opacity: 0.85; transform: translateX(-50%) scale(1.12); }
+  }
+
+  .hero__inner { position: relative; z-index: 1; }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  .hero__title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.1rem, 8vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .hero__subtitle {
+    max-width: 560px;
+    margin: 0 auto 34px;
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    color: var(--muted);
+  }
+
+  .hero__note {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* ---------------- BUTTONS ---------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 999px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn__icon { width: 24px; height: 24px; fill: currentColor; }
+
+  .btn--whatsapp {
+    color: #04210f;
+    background: linear-gradient(135deg, var(--accent-3), #1eff6a);
+    box-shadow: 0 0 30px rgba(0, 255, 149, 0.4);
+  }
+
+  .btn--whatsapp:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(0, 255, 149, 0.65); }
+
+  /* Pulse animation to draw attention */
+  .pulse { animation: btnPulse 2.2s ease-in-out infinite; }
+
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 25px rgba(0, 255, 149, 0.35); }
+    50%      { box-shadow: 0 0 45px rgba(0, 255, 149, 0.75); }
+  }
+
+  /* ---------------- SECTIONS ---------------- */
+  .section { padding: 70px 0; }
+  .section--alt { background: var(--bg-alt); }
+
+  .section__title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 6vw, 2.6rem);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .section__lead {
+    max-width: 620px;
+    margin: 0 auto 44px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .section__lead strong { color: var(--text); }
+
+  /* ---------------- PRICING ---------------- */
+  .pricing {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 720px;
+    margin: 0 auto 40px;
+  }
+
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 22px;
+    text-align: center;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .price-card:hover { transform: translateY(-4px); border-color: rgba(0, 229, 255, 0.4); }
+
+  .price-card--featured {
+    background: var(--surface-2);
+    border-color: rgba(177, 75, 255, 0.5);
+    box-shadow: 0 0 30px rgba(177, 75, 255, 0.15);
+  }
+
+  .price-card__tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .price-card__price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+  }
+
+  .price-card__price span { font-size: 0.95rem; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 500; }
+
+  .price-card__desc { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+  /* ---------------- FEATURES ---------------- */
+  .features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .features li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 0.98rem;
+  }
+
+  /* ---------------- SPOTS GRID ---------------- */
+  .spots-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .spot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .spot:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.45);
+    box-shadow: 0 0 28px rgba(0, 229, 255, 0.12);
+  }
+
+  .spot__tag {
+    align-self: flex-start;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--tag-text);
+    background: rgba(177, 75, 255, 0.12);
+    border: 1px solid rgba(177, 75, 255, 0.35);
+    padding: 5px 11px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  .spot__name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .spot__desc { color: var(--muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 18px; }
+
+  .spot__map {
+    align-self: flex-start;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: opacity 0.15s ease;
+  }
+
+  .spot__map:hover { opacity: 0.8; }
+
+  /* ---------------- FOOTER ---------------- */
+  .footer {
+    background: #060609;
+    border-top: 1px solid var(--border);
+    padding: 50px 0 40px;
+    text-align: center;
+  }
+
+  .footer__brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .footer__location { color: var(--muted); margin-bottom: 20px; }
+
+  .footer__links {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin-bottom: 22px;
+  }
+
+  .footer__links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .footer__links a:hover { color: var(--accent); border-color: rgba(0, 229, 255, 0.5); }
+
+  .footer__copy { color: var(--muted); font-size: 0.82rem; }
+
+  /* ---------------- RESPONSIVE (tablet & up) ---------------- */
+  @media (min-width: 700px) {
+    .pricing { grid-template-columns: repeat(3, 1fr); }
+    .features { grid-template-columns: 1fr 1fr; }
+    .spots-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1000px) {
+    .spots-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__glow, .pulse { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+  </style>
 </head>
 <body>
 
@@ -104,6 +461,7 @@
            • <h3>               -> the place name
            • <p class="spot__desc"> -> the one-line description
            • the "View on Map" href -> a Google Maps link/search URL
+           • the map link's aria-label -> "View <place name> on map"
          To remove a spot, delete its whole <article>...</article> block.
          ========================================================= -->
     <section class="section section--alt" id="spots">
@@ -124,7 +482,7 @@
               Sprawling play arena in Mundur with go-karting, billiards, air
               hockey, paintball &amp; more — fun for the whole crew.
             </p>
-            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Garron+Play+Arena+Mundur+Thrissur" target="_blank" rel="noopener">View on Map →</a>
+            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Garron+Play+Arena+Mundur+Thrissur" target="_blank" rel="noopener" aria-label="View Garron Play Arena on map">View on Map →</a>
           </article>
 
           <!-- SPOT: Speedway Thrissur -->
@@ -135,7 +493,7 @@
               Kerala's biggest outdoor go-kart track with 270cc karts —
               opposite Peramangalam Police Station.
             </p>
-            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Speedway+Thrissur+Peramangalam" target="_blank" rel="noopener">View on Map →</a>
+            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Speedway+Thrissur+Peramangalam" target="_blank" rel="noopener" aria-label="View Speedway Thrissur on map">View on Map →</a>
           </article>
 
           <!-- SPOT: PlayHigh Gaming -->
@@ -146,7 +504,7 @@
               PS5 gaming café at Eastfort, Chembukkav (opp. Adam Bazar) — latest
               games, AC seating &amp; a 55" smart gaming TV for the full experience.
             </p>
-            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Playhigh+Gaming+Chembukkav+Thrissur" target="_blank" rel="noopener">View on Map →</a>
+            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Playhigh+Gaming+Chembukkav+Thrissur" target="_blank" rel="noopener" aria-label="View PlayHigh Gaming on map">View on Map →</a>
           </article>
 
           <!-- SPOT: Bowling @ Sobha City Mall -->
@@ -157,7 +515,7 @@
               Knock down some pins at the bowling alley inside Sobha City Mall,
               Puzhakkal — plus arcade games &amp; a food court.
             </p>
-            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Sobha+City+Mall+Bowling+Thrissur" target="_blank" rel="noopener">View on Map →</a>
+            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Sobha+City+Mall+Bowling+Thrissur" target="_blank" rel="noopener" aria-label="View bowling at Sobha City Mall on map">View on Map →</a>
           </article>
 
           <!-- SPOT: Pro Snookers Gaming Hub -->
@@ -168,7 +526,7 @@
               Premium gaming lounge in Kalathode (opposite Axis Bank) with
               Snooker, Pool, Billiards, PlayStation &amp; VR all under one roof.
             </p>
-            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Pro+Snookers+Gaming+Hub+Kalathode+Thrissur" target="_blank" rel="noopener">View on Map →</a>
+            <a class="spot__map" href="https://www.google.com/maps/search/?api=1&query=Pro+Snookers+Gaming+Hub+Kalathode+Thrissur" target="_blank" rel="noopener" aria-label="View Pro Snookers Gaming Hub on map">View on Map →</a>
           </article>
 
         </div>

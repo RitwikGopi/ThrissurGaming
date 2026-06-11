@@ -66,7 +66,7 @@
     --muted:     #b3b3cc;   /* secondary text (contrast-safe) */
     --accent:    #00e5ff;   /* electric blue (primary)    */
     --accent-2:  #b14bff;   /* purple (secondary)         */
-    --accent-3:  #00ff95;   /* neon green (whatsapp)       */
+    --accent-3:  #00ff95;   /* neon green (notify button)  */
     --tag-text:  #d6abff;   /* lightened purple for tags (contrast-safe) */
     --border:    rgba(255, 255, 255, 0.08);
     --radius:    16px;
@@ -186,13 +186,13 @@
 
   .btn__icon { width: 24px; height: 24px; fill: currentColor; }
 
-  .btn--whatsapp {
+  .btn--notify {
     color: #04210f;
     background: linear-gradient(135deg, var(--accent-3), #1eff6a);
     box-shadow: 0 0 30px rgba(0, 255, 149, 0.4);
   }
 
-  .btn--whatsapp:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(0, 255, 149, 0.65); }
+  .btn--notify:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(0, 255, 149, 0.65); }
 
   /* Pulse animation to draw attention */
   .pulse { animation: btnPulse 2.2s ease-in-out infinite; }
@@ -424,17 +424,19 @@
         the moment we go live — limited launch slots available.
       </p>
 
-      <!-- EDIT CONTACT: replace REPLACE_ME_PHONE with your full number in
-           international format, no symbols. Example: 919876543210
-           Link format: https://wa.me/91XXXXXXXXXX -->
+      <!-- EDIT CONTACT: paste your Google Form link below (in the form editor:
+           Send → 🔗 link icon → Copy). This is where "Notify Me / Book Early"
+           sends visitors; their submissions collect in your linked Google Sheet.
+           Use the SAME link in the footer "Notify Me" link further down. -->
       <a
-        class="btn btn--whatsapp pulse"
-        href="https://wa.me/91REPLACE_ME_PHONE?text=Hi!%20I'd%20like%20to%20book%20early%20%2F%20get%20notified%20about%20PS5%20Rentals%20in%20Thrissur."
+        class="btn btn--notify pulse"
+        href="REPLACE_ME_GOOGLE_FORM_URL"
         target="_blank"
         rel="noopener"
+        data-notify
       >
         <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-1.6-.8-2.6-1.4-3.7-3.2-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/>
+          <path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-5-1.6-1.6V11a5.5 5.5 0 0 0-4-5.3V5a1.4 1.4 0 0 0-2.8 0v.7A5.5 5.5 0 0 0 6.6 11v4.4L5 17a.9.9 0 0 0 .6 1.6h12.8A.9.9 0 0 0 19 17z"/>
         </svg>
         Notify Me / Book Early
       </a>
@@ -578,8 +580,9 @@
        FOOTER
        -----------------------------------------------------------
        EDIT CONTACT DETAILS HERE:
-         • REPLACE_ME_PHONE   -> WhatsApp number (intl format, e.g. 919876543210)
-         • REPLACE_ME_INSTA   -> your Instagram handle (without the @)
+         • REPLACE_ME_GOOGLE_FORM_URL -> your Google Form link (the SAME one
+           used by the hero "Notify Me / Book Early" button above)
+         • REPLACE_ME_INSTA -> your Instagram handle (without the @)
        ========================================================= -->
   <footer class="footer">
     <div class="container footer__inner">
@@ -587,7 +590,7 @@
       <p class="footer__location">Thrissur, Kerala</p>
 
       <div class="footer__links">
-        <a href="https://wa.me/91REPLACE_ME_PHONE" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="REPLACE_ME_GOOGLE_FORM_URL" target="_blank" rel="noopener" data-notify>Notify Me</a>
         <a href="https://instagram.com/REPLACE_ME_INSTA" target="_blank" rel="noopener">Instagram</a>
       </div>
 
@@ -618,13 +621,13 @@
        Docs: https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site
        ========================================================= -->
 
-  <!-- Track taps on any WhatsApp link as a GA4 conversion event.
+  <!-- Track taps on any "Notify Me" link as a GA4 conversion event.
        Does nothing until your GA4 Measurement ID is set above. -->
   <script>
-    document.querySelectorAll('a[href*="wa.me"]').forEach(function (link) {
+    document.querySelectorAll("a[data-notify]").forEach(function (link) {
       link.addEventListener("click", function () {
         if (typeof window.gtag === "function") {
-          window.gtag("event", "whatsapp_click", {
+          window.gtag("event", "notify_click", {
             event_category: "engagement",
             event_label: link.closest("footer") ? "footer" : "hero"
           });

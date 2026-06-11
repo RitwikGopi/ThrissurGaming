@@ -229,7 +229,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto 40px;
   }
 
@@ -266,7 +266,11 @@
     font-weight: 800;
   }
 
-  .price-card__price span { font-size: 0.95rem; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 500; }
+  .price-card__unit { font-size: 0.95rem; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 500; }
+
+  /* "Hidden digits" placeholder — looks like an intentional masked price
+     (e.g. ₹•••) until you type your real rate over the ••• in the HTML. */
+  .hidden-digits { letter-spacing: 2px; opacity: 0.85; }
 
   .price-card__desc { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
 
@@ -385,12 +389,13 @@
 
   /* ---------------- RESPONSIVE (tablet & up) ---------------- */
   @media (min-width: 700px) {
-    .pricing { grid-template-columns: repeat(3, 1fr); }
+    .pricing { grid-template-columns: repeat(2, 1fr); }
     .features { grid-template-columns: 1fr 1fr; }
     .spots-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1000px) {
+    .pricing { grid-template-columns: repeat(4, 1fr); }
     .spots-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
@@ -451,22 +456,29 @@
           you play. Perfect for weekends, parties, and game nights.
         </p>
 
-        <!-- EDIT PRICING: replace the REPLACE_ME prices below with your rates -->
+        <!-- EDIT PRICING: replace the ••• in each card with your rate (e.g. 499).
+             The ••• reads as "price hidden / coming soon" until you set it.
+             To add/remove a plan, copy or delete a whole .price-card block. -->
         <div class="pricing">
           <div class="price-card">
-            <span class="price-card__tag">Hourly</span>
-            <p class="price-card__price">₹REPLACE_ME_HOURLY<span>/hr</span></p>
-            <p class="price-card__desc">Quick sessions &amp; casual play</p>
-          </div>
-          <div class="price-card price-card--featured">
             <span class="price-card__tag">Daily</span>
-            <p class="price-card__price">₹REPLACE_ME_DAILY<span>/day</span></p>
+            <p class="price-card__price">₹<span class="hidden-digits">•••</span><span class="price-card__unit">/day</span></p>
             <p class="price-card__desc">A full day of gaming</p>
           </div>
-          <div class="price-card">
+          <div class="price-card price-card--featured">
             <span class="price-card__tag">Weekend</span>
-            <p class="price-card__price">₹REPLACE_ME_WEEKEND<span>/wknd</span></p>
+            <p class="price-card__price">₹<span class="hidden-digits">•••</span><span class="price-card__unit">/wknd</span></p>
             <p class="price-card__desc">Fri–Sun, best value</p>
+          </div>
+          <div class="price-card">
+            <span class="price-card__tag">Weekly</span>
+            <p class="price-card__price">₹<span class="hidden-digits">•••</span><span class="price-card__unit">/week</span></p>
+            <p class="price-card__desc">7 days, more savings</p>
+          </div>
+          <div class="price-card">
+            <span class="price-card__tag">Monthly</span>
+            <p class="price-card__price">₹<span class="hidden-digits">•••</span><span class="price-card__unit">/month</span></p>
+            <p class="price-card__desc">Best for the long haul</p>
           </div>
         </div>
 

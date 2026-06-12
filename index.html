@@ -529,7 +529,7 @@
       <a
         class="btn btn--notify pulse"
         href="#notify"
-        data-notify
+        data-track="notify_click"
       >
         <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-5-1.6-1.6V11a5.5 5.5 0 0 0-4-5.3V5a1.4 1.4 0 0 0-2.8 0v.7A5.5 5.5 0 0 0 6.6 11v4.4L5 17a.9.9 0 0 0 .6 1.6h12.8A.9.9 0 0 0 19 17z"/>
@@ -616,7 +616,7 @@
 
         <p class="form-fallback">
           Form not loading?
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGIqsQRX9zlJbZs4aOksnPduX3LWvqEtz7s_ScBG4qNvwS1Q/viewform" target="_blank" rel="noopener" data-notify>Open it in a new tab →</a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGIqsQRX9zlJbZs4aOksnPduX3LWvqEtz7s_ScBG4qNvwS1Q/viewform" target="_blank" rel="noopener" data-track="notify_click">Open it in a new tab →</a>
         </p>
       </div>
     </section>
@@ -718,8 +718,8 @@
       <p class="footer__location">Thrissur, Kerala</p>
 
       <div class="footer__links">
-        <a href="#notify" data-notify>Notify Me</a>
-        <a href="https://instagram.com/gamingthrissur" target="_blank" rel="noopener">Instagram</a>
+        <a href="#notify" data-track="notify_click">Notify Me</a>
+        <a href="https://instagram.com/gamingthrissur" target="_blank" rel="noopener" data-track="instagram_click">Instagram</a>
       </div>
 
       <p class="footer__copy">© 2026 Thrissur PS5 Rentals. All rights reserved.</p>
@@ -749,13 +749,15 @@
        Docs: https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site
        ========================================================= -->
 
-  <!-- Track taps on any "Notify Me" link as a GA4 conversion event.
-       Does nothing until your GA4 Measurement ID is set above. -->
+  <!-- Track taps on key links as GA4 events. To track a new link, add
+       data-track="your_event_name" to its <a> tag — no JS edit needed.
+       Does nothing until your GA4 Measurement ID is set above.
+       Events in use: notify_click (Notify Me buttons), instagram_click. -->
   <script>
-    document.querySelectorAll("a[data-notify]").forEach(function (link) {
+    document.querySelectorAll("a[data-track]").forEach(function (link) {
       link.addEventListener("click", function () {
         if (typeof window.gtag === "function") {
-          window.gtag("event", "notify_click", {
+          window.gtag("event", link.getAttribute("data-track"), {
             event_category: "engagement",
             event_label: link.closest("footer") ? "footer" : "hero"
           });

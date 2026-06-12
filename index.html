@@ -3,40 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google tag (gtag.js) — Google Analytics 4 (G-MQ63RWM481).
+       Standard snippet placed high in <head> so Google's tag detector
+       finds it. The notify_click / instagram_click events near the end
+       of <body> use the global gtag() defined here. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ63RWM481"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-MQ63RWM481');
+  </script>
+
   <title>PS5 Rentals — Coming Soon to Thrissur</title>
   <meta name="description" content="Home PS5 console rentals delivered to your door in Thrissur, Kerala. Rent a PlayStation 5 with controllers and games by the day, weekend, week, or month." />
   <meta name="theme-color" content="#0b0d13" />
 
   <!-- Favicon (inline SVG — PS-blue tile, no extra request) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0d13'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%233d8bff' stroke-width='8'/%3E%3C/svg%3E" />
-
-  <!-- =========================================================
-       GOOGLE ANALYTICS 4 (GA4)
-       -----------------------------------------------------------
-       EDIT: paste your Measurement ID (looks like G-XXXXXXXXXX)
-       between the quotes below. Until you do, analytics stays
-       completely OFF — no third-party requests, no cookies,
-       no impact on your PageSpeed scores.
-       Find your ID in GA: Admin → Data Streams → your web stream.
-       Note: GA4 sets cookies. India's DPDP Act may make a small
-       cookie/consent notice advisable — ask me to add one if you want.
-       ========================================================= -->
-  <script>
-    var GA_MEASUREMENT_ID = "G-MQ63RWM481";
-
-    if (GA_MEASUREMENT_ID && GA_MEASUREMENT_ID.indexOf("REPLACE_ME") === -1) {
-      var gaScript = document.createElement("script");
-      gaScript.async = true;
-      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag("js", new Date());
-      gtag("config", GA_MEASUREMENT_ID);
-    }
-  </script>
 
   <!-- Open Graph / social preview (edit URL once your domain is live) -->
   <meta property="og:title" content="PS5 Rentals — Coming Soon to Thrissur" />

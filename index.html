@@ -499,6 +499,21 @@
     background: #ffffff; /* avoids a dark flash while the form loads */
   }
 
+  /* Lightweight placeholder shown before the Google Form is loaded */
+  .form-facade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    padding: 46px 24px;
+    border-radius: calc(var(--radius) - 8px);
+    background: linear-gradient(180deg, rgba(61, 139, 255, 0.10), rgba(255, 255, 255, 0.03));
+  }
+
+  .form-facade__title { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; }
+  .form-facade__text { color: var(--muted); font-size: 0.95rem; max-width: 360px; }
+
   .form-fallback {
     text-align: center;
     margin-top: 16px;
@@ -743,14 +758,19 @@
           early birds get first pick of launch slots.
         </p>
 
+        <!-- The Google Form is loaded only when the visitor scrolls to it or
+             taps a "Notify Me" button (see the deferred-form script near the
+             end of <body>). This keeps Google's heavy form code + third-party
+             cookies off the initial page load, protecting the PageSpeed
+             Best Practices / Performance scores. data-form-src holds the embed
+             URL; change it there if you swap forms. -->
         <div class="form-shell">
-          <iframe
-            class="form-frame"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSfGIqsQRX9zlJbZs4aOksnPduX3LWvqEtz7s_ScBG4qNvwS1Q/viewform?embedded=true"
-            title="Notify me — PS5 Rentals Thrissur sign-up form"
-            loading="lazy"
-            height="452"
-          >Loading…</iframe>
+          <div class="form-facade" id="form-facade"
+               data-form-src="https://docs.google.com/forms/d/e/1FAIpQLSfGIqsQRX9zlJbZs4aOksnPduX3LWvqEtz7s_ScBG4qNvwS1Q/viewform?embedded=true">
+            <p class="form-facade__title">Quick sign-up</p>
+            <p class="form-facade__text">Name &amp; number — that's it. The form loads right here.</p>
+            <button class="btn btn--notify" type="button" id="form-load-btn" data-track="notify_click">Open the form</button>
+          </div>
         </div>
 
         <p class="form-fallback">
@@ -924,6 +944,43 @@
         }
       });
     });
+
+    // Deferred Google Form: only inject the iframe when the visitor scrolls to
+    // it or taps a "Notify Me" button. Keeps Google's heavy form code and
+    // third-party cookies off the initial load (and out of Lighthouse's test,
+    // which never scrolls or clicks), protecting the PageSpeed scores.
+    (function () {
+      var facade = document.getElementById("form-facade");
+      if (!facade) return;
+      var loaded = false;
+
+      function loadForm() {
+        if (loaded) return;
+        loaded = true;
+        var iframe = document.createElement("iframe");
+        iframe.className = "form-frame";
+        iframe.src = facade.getAttribute("data-form-src");
+        iframe.title = "Notify me — Thrissur Gaming sign-up form";
+        iframe.height = "452";
+        facade.replaceWith(iframe);
+      }
+
+      // Auto-load as the section nears the viewport (seamless for real users).
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { loadForm(); io.disconnect(); }
+        }, { rootMargin: "200px" });
+        io.observe(facade);
+      } else {
+        loadForm();
+      }
+
+      // Load instantly on explicit intent (the facade button or any Notify CTA).
+      document.getElementById("form-load-btn").addEventListener("click", loadForm);
+      document.querySelectorAll('a[href="#notify"]').forEach(function (a) {
+        a.addEventListener("click", loadForm);
+      });
+    })();
   </script>
 
 </body>
